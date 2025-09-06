@@ -133,26 +133,31 @@
         var statusEl = document.getElementById('status');
         var animInstance = null;
 
-        function loadAnimation(path) {
+        async function loadAnimation(path) {
           if (animInstance) {
-            try { animInstance.destroy(); } catch (e) {}
+            try { animInstance.destroy(); } catch (e) { console.warn(e); }
             animInstance = null;
           }
-          var url = path + '?t=' + Date.now(); // cache-bust
+          var url = path + '?t=' + Date.now();
           statusEl.textContent = 'Loading ' + path + '...';
-          animInstance = lottie.loadAnimation({
-            container: lottieContainer,
-            renderer: 'svg',
-            loop: true,
-            autoplay: true,
-            path: url
-          });
-          animInstance.addEventListener('DOMLoaded', function() {
-            statusEl.textContent = 'Loaded ' + path;
-          });
-          animInstance.addEventListener('data_failed', function() {
-            statusEl.textContent = 'Failed to load ' + path;
-          });
+          try {
+            var res = await fetch(url, { cache: 'no-store' });
+            if (!res.ok) throw new Error('HTTP ' + res.status + ' ' + res.statusText);
+            var data = await res.json();
+            animInstance = lottie.loadAnimation({
+              container: lottieContainer,
+              renderer: 'svg',
+              loop: true,
+              autoplay: true,
+              animationData: data
+            });
+            animInstance.addEventListener('DOMLoaded', function() {
+              statusEl.textContent = 'Loaded ' + path;
+            });
+          } catch (err) {
+            console.error('Failed to load', path, err);
+            statusEl.textContent = 'Failed to load ' + path + ': ' + err.message;
+          }
         }
 
         selector.addEventListener('change', function(e) {
