@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>LCOE FAB Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      :root {
+        --color-accent: #29B99A;
+        --color-surface: #0b0b0b;
+        --color-on-surface: #ffffff;
+        --space-6: 24px;
+        --size-fab: 56px;
+        --radius-full: 9999px;
+        --shadow-elevated: 0 10px 24px rgba(0,0,0,.25);
+      }
+      .lcoe-fab {
+        position: fixed;
+        bottom: var(--space-6);
+        right: var(--space-6);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: var(--size-fab);
+        height: var(--size-fab);
+        min-width: 44px;
+        min-height: 44px;
+        border: 0;
+        border-radius: var(--radius-full);
+        background: var(--color-surface);
+        color: var(--color-on-surface);
+        box-shadow: var(--shadow-elevated);
+        cursor: pointer;
+        z-index: 1000;
+      }
+      .lcoe-fab:focus-visible {
+        box-shadow:
+          0 0 0 3px rgba(255,255,255,0.6),
+          var(--shadow-elevated);
+      }
+      .lcoe-fab::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        background: var(--color-accent);
+        opacity: 0.28;
+        transform: scale(1);
+        z-index: -1;
+        animation: lcoe-fab-pulse 2.4s ease-out infinite;
+      }
+      @keyframes lcoe-fab-pulse {
+        0%   { transform: scale(1);   opacity: 0.28; }
+        70%  { transform: scale(1.6); opacity: 0.0;  }
+        100% { transform: scale(1.6); opacity: 0.0;  }
+      }
+      .lcoe-fab__icon { width: 60%; height: 60%; display: block; }
+    </style>
+  </head>
+  <body>
+    <button class="lcoe-fab" aria-label="Open chat">
+      <!-- Inline logo SVG (same as file) -->
+      <svg class="lcoe-fab__icon" viewBox="0 0 115 120" role="img" aria-hidden="true" focusable="false">
+        <title>LCOE chat bubble with six bars</title>
+        <path d="M44.8056 112.752C14.0856 106.002 -5.41436 75.5321 1.33564 44.8121C8.08564 14.0921 38.5556 -5.40786 69.2756 1.33214C72.2056 1.97214 74.0657 4.87214 73.4156 7.81214C72.7656 10.7521 69.8756 12.6021 66.9356 11.9521C42.0756 6.49214 17.4056 22.2821 11.9456 47.1421C6.48564 72.0021 22.2757 96.6721 47.1357 102.132C71.9957 107.592 96.6656 91.8021 102.126 66.9421C102.766 64.0121 105.666 62.1521 108.606 62.8021C111.536 63.4421 113.396 66.3421 112.746 69.2821C105.996 100.002 75.5256 119.502 44.8056 112.752Z" fill="url(#ringGradient)"/>
+        <g id="bars" fill="#E9A539">
+          <path d="M26.2975 71.6021C24.5775 71.6021 23.1875 72.9921 23.1875 74.7121V95.6721C23.1875 97.392 24.5775 98.7821 26.2975 98.7821C28.0175 98.7821 29.4075 97.392 29.4075 95.6721V74.7121C29.4075 72.9921 28.0175 71.6021 26.2975 71.6021Z"/>
+          <path d="M38.3053 60.312C36.5853 60.312 35.1953 61.702 35.1953 63.422V103.732C35.1953 105.452 36.5853 106.842 38.3053 106.842C40.0253 106.842 41.4153 105.452 41.4153 103.732V63.422C41.4153 61.702 40.0253 60.312 38.3053 60.312Z"/>
+          <path d="M50.5983 55.4819C48.8783 55.4819 47.4883 56.8719 47.4883 58.5919V106.962C47.4883 108.682 48.8783 110.072 50.5983 110.072C52.3183 110.072 53.7083 108.682 53.7083 106.962V58.5919C53.7083 56.8719 52.3183 55.4819 50.5983 55.4819Z"/>
+          <path d="M63.4967 55.4819C61.7767 55.4819 60.3867 56.8719 60.3867 58.5919V106.962C60.3867 108.682 61.7767 110.072 63.4967 110.072C65.2167 110.072 66.6067 108.682 66.6067 106.962V58.5919C66.6067 56.8719 65.2167 55.4819 63.4967 55.4819Z"/>
+          <path d="M76.3971 60.312C74.6771 60.312 73.2871 61.702 73.2871 63.422V103.732C73.2871 105.452 74.6771 106.842 76.3971 106.842C78.1171 106.842 79.5071 105.452 79.5071 103.732V63.422C79.5071 61.702 78.1171 60.312 76.3971 60.312Z"/>
+          <path d="M88.2975 71.6021C86.5775 71.6021 85.1875 72.9921 85.1875 74.7121V97.2821C85.1875 99.0021 86.5775 100.392 88.2975 100.392C90.0175 100.392 91.4075 99.0021 91.4075 97.2821V74.7121C91.4075 72.9921 90.0175 71.6021 88.2975 71.6021Z"/>
+        </g>
+        <path id="tail" d="M9.68168 119.647C6.80685 120.75 3.81604 118.327 4.29817 115.286L8.9409 86L36.0198 107.935C36.6179 108.419 36.4672 109.37 35.7485 109.646L9.68168 119.647Z" fill="#E7A439"/>
+        <path d="M108.238 60.1821C105.898 59.6721 104.088 57.6321 103.978 55.1221C103.228 38.7221 93.7077 23.8221 79.1177 16.2421C76.4577 14.8521 75.4177 11.5721 76.7977 8.91213C78.1877 6.25213 81.4577 5.21213 84.1277 6.59213C102.138 15.9621 113.908 34.3621 114.828 54.6221C114.968 57.6221 112.648 60.1621 109.648 60.3021C109.158 60.3221 108.688 60.2821 108.228 60.1821Z" fill="#29B99A"/>
+        <defs>
+          <linearGradient id="ringGradient" x1="68.8769" y1="7.16663" x2="52.4726" y2="79.4423" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#EE6723" stop-opacity="0.9"/>
+            <stop offset="1" stop-color="#E7A439"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </button>
+    <script>
+      document.querySelector('.lcoe-fab')?.addEventListener('click', () => {
+        alert('FAB clicked');
+      });
+    </script>
+  </body>
+</html>
